@@ -4,11 +4,9 @@ const search = ref("");
 
 <template>
   <div class="p-3 flex flex-row flex-wrap justify-around items-center gap-3">
-    <div>
-      <NuxtLink to="/">
-        <h3 class="text-3xl text-indigo-700">Social Media</h3>
-      </NuxtLink>
-    </div>
+    <h3 class="text-3xl text-indigo-700">
+      <NuxtLink to="/">Social Media</NuxtLink>
+    </h3>
     <div class="gap-3 flex flex-row items-center">
       <input
         v-model="search"
@@ -17,30 +15,11 @@ const search = ref("");
         class="px-2.5 py-1.5 caret-indigo-700 outline-none border focus:border-2 rounded border-indigo-300 focus:border-indigo-600"
       />
       <div class="flex flex-row gap-1">
-        <button>Sign Up</button>
-        <button>Log In</button>
+        <Authentication v-bind:sign="false" />
+        <Authentication v-bind:sign="true" />
       </div>
     </div>
   </div>
 </template>
 
-<style scoped>
-button {
-  width: 85px;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
-  padding-left: 0.75rem;
-  padding-right: 0.75rem;
-  background-color: transparent;
-  color: #4338ca;
-  font-weight: 600;
-  border-radius: 0.25rem;
-  border-width: 1px;
-  border-color: #6366f1;
-}
-button:hover {
-  background-color: #6366f1;
-  color: #ffffff;
-  border-color: transparent;
-}
-</style>
+<style scoped></style>
