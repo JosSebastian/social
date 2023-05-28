@@ -2,8 +2,9 @@
 
 <template>
   <div>
-    <HeaderBar />
+    <AppHeader />
     <slot />
+    <AppFooter />
   </div>
 </template>
 
