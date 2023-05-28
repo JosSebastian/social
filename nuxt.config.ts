@@ -2,6 +2,14 @@
 export default defineNuxtConfig({
   modules: ["@pinia/nuxt", "@nuxtjs/tailwindcss"],
   devtools: {
-    enabled: true
-  }
+    enabled: true,
+  },
+  vite: {
+    vue: {
+      script: {
+        defineModel: true,
+        propsDestructure: true,
+      },
+    },
+  },
 });
