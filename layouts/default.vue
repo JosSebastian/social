@@ -3,7 +3,9 @@
 <template>
   <div>
     <AppHeader />
-    <slot />
+    <div class="px-24 py-3">
+      <slot />
+    </div>
     <AppFooter />
   </div>
 </template>
