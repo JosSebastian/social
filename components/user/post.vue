@@ -3,10 +3,10 @@ const props = defineProps({
   post: String,
   profile: String,
   name: String,
-  id: String,
-  caption: String,
+  identification: String,
+  description: String,
 });
-const { post, profile, name, id, caption } = toRefs(props);
+const { post, profile, name, identification, description } = toRefs(props);
 </script>
 
 <template>
@@ -25,11 +25,11 @@ const { post, profile, name, id, caption } = toRefs(props);
         <!-- Post Profile Information -->
         <div class="flex flex-col">
           <p class="ml-2">{{ name }}</p>
-          <p class="ml-2 -translate-y-1 text-xs">@{{ id }}</p>
+          <p class="ml-2 -translate-y-1 text-xs">@{{ identification }}</p>
         </div>
       </div>
       <!-- Post Caption -->
-      <p class="mt-1 truncate">{{ caption }}</p>
+      <p class="mt-1 truncate">{{ description }}</p>
     </div>
   </div>
 </template>
