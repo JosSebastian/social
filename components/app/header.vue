@@ -1,6 +1,9 @@
 <script lang="ts" setup>
 const search = ref("");
 const user = useSupabaseUser();
+const authenticate = (sign: string) => {
+  navigateTo(`/user/authenticate?action=sign${sign}`);
+};
 </script>
 
 <template>
@@ -20,11 +23,11 @@ const user = useSupabaseUser();
       />
       <!-- Authentication -->
       <div v-if="!user" class="flex flex-row gap-1">
-        <AuthenticationOn />
-        <AuthenticationIn />
+        <CustomButton v-on:click="authenticate('On')">Sign On</CustomButton>
+        <CustomButton v-on:click="authenticate('In')">Sign In</CustomButton>
       </div>
       <div v-else>
-        <AuthenticationOut />
+        <CustomButton v-on:click="authenticate('Out')">Sign Out</CustomButton>
       </div>
     </div>
   </div>
