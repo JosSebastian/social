@@ -1,11 +1,12 @@
 <script lang="ts" setup>
+const input = defineModel();
 const { label, type } = defineProps(["label", "type"]);
 </script>
 
 <template>
   <div>
-    <label for="input" class="input-label">{{ label }}</label>
-    <input v-bind:type="type" id="input" class="input" required />
+    <label class="input-label">{{ label }}</label>
+    <input v-model="input" v-bind:type="type" class="input" required />
   </div>
 </template>
 
