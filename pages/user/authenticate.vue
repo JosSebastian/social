@@ -5,6 +5,7 @@ const action = computed(() => {
   const query = router.currentRoute.value.query;
   if (query.action === "signOn") return "Sign On";
   else if (query.action === "signIn") return "Sign In";
+  else return undefined;
 });
 const credentials = ref({
   email: "",
@@ -27,7 +28,7 @@ const cancel = () => {
 const confirm = () => {
   if (action.value === "Sign On") signOn();
   else if (action.value === "Sign In") signIn();
-  else if (action.value === "Sign Out") signOut();
+  else signOut();
   router.back();
 };
 </script>
