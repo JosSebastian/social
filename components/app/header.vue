@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 const search = ref("");
-const authenticated = ref(false);
+const user = useSupabaseUser();
 </script>
 
 <template>
@@ -11,17 +11,20 @@ const authenticated = ref(false);
     </h3>
     <!-- Header Right -->
     <div class="gap-3 flex flex-row items-center">
-      <!-- User Search -->
+      <!-- Search -->
       <input
         v-model="search"
         type="text"
         placeholder="Search"
         class="px-2.5 py-1.5 caret-indigo-700 outline-none border focus:border-2 rounded border-indigo-300 focus:border-indigo-600"
       />
-      <!-- User Authentication -->
-      <div v-if="!authenticated" class="flex flex-row gap-1">
+      <!-- Authentication -->
+      <div v-if="!user" class="flex flex-row gap-1">
         <AuthenticationOn />
         <AuthenticationIn />
+      </div>
+      <div v-else>
+        <AuthenticationOut />
       </div>
     </div>
   </div>
