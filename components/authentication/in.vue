@@ -2,6 +2,8 @@
 const visibility = ref(false);
 const changeVisibility = () => {
   visibility.value = !visibility.value;
+  credentials.value.email = "";
+  credentials.value.password = "";
 };
 const supabase = useSupabaseClient();
 const credentials = ref({
@@ -9,11 +11,10 @@ const credentials = ref({
   password: "",
 });
 const signIn = async () => {
-  const response = await supabase.auth.signInWithPassword({
+  await supabase.auth.signInWithPassword({
     email: credentials.value.email,
     password: credentials.value.password,
   });
-  console.log(response);
   changeVisibility();
 };
 </script>
@@ -36,7 +37,6 @@ const signIn = async () => {
           label="Password:"
           type="password"
         />
-        <!-- Sign In -->
         <div class="flex flex-row gap-1.5">
           <CustomButton v-on:click="changeVisibility()" class="grow"
             >Cancel</CustomButton
