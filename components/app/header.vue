@@ -2,7 +2,7 @@
 const search = ref("");
 const user = useSupabaseUser();
 const authenticate = (sign: string) => {
-  navigateTo(`/user/authenticate?action=sign${sign}`);
+  navigateTo(`/authenticate?sign=${sign}`);
 };
 </script>
 
@@ -23,11 +23,11 @@ const authenticate = (sign: string) => {
       />
       <!-- Authentication -->
       <div v-if="!user" class="flex flex-row gap-1">
-        <CustomButton v-on:click="authenticate('On')">Sign On</CustomButton>
-        <CustomButton v-on:click="authenticate('In')">Sign In</CustomButton>
+        <CustomButton v-on:click="authenticate('on')">Sign On</CustomButton>
+        <CustomButton v-on:click="authenticate('in')">Sign In</CustomButton>
       </div>
       <div v-else>
-        <CustomButton v-on:click="authenticate('Out')">Sign Out</CustomButton>
+        <CustomButton v-on:click="authenticate('out')">Sign Out</CustomButton>
       </div>
     </div>
   </div>

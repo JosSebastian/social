@@ -1,11 +1,11 @@
 <script lang="ts" setup>
 const supabase = useSupabaseClient();
 const router = useRouter();
-const action = computed(() => {
+const sign = computed(() => {
   const query = router.currentRoute.value.query;
-  if (query.action === "signOn") return "Sign On";
-  else if (query.action === "signIn") return "Sign In";
-  else return undefined;
+  if (query.sign === "on") return "Sign On";
+  else if (query.sign === "in") return "Sign In";
+  else if (query.sign === "out") return "Sign Out";
 });
 const credentials = ref({
   email: "",
@@ -26,9 +26,10 @@ const cancel = () => {
   router.back();
 };
 const confirm = () => {
-  if (action.value === "Sign On") signOn();
-  else if (action.value === "Sign In") signIn();
-  else signOut();
+  const query = router.currentRoute.value.query;
+  if (query.sign === "on") signOn();
+  else if (query.sign === "in") signIn();
+  else if (query.sign === "out") signOut();
   router.back();
 };
 </script>
@@ -36,8 +37,8 @@ const confirm = () => {
 <template>
   <div class="background">
     <div class="foreground">
-      <div v-if="action" class="flex flex-col gap-3">
-        <h3 class="text-2xl font-[450]">{{ action }}</h3>
+      <h3 v-if="sign" class="text-2xl font-[450]">{{ sign }}</h3>
+      <div v-if="sign == 'Sign On' || sign == 'Sign In'" class="flex flex-col gap-3" >
         <!-- Email -->
         <CustomInput v-model="credentials.email" label="Email:" type="email" />
         <!-- Password -->
@@ -48,7 +49,7 @@ const confirm = () => {
         />
       </div>
       <!-- Action -->
-      <div v-if="action || !action" class="flex flex-row gap-1.5">
+      <div class="flex flex-row gap-1.5">
         <CustomButton v-on:click="cancel()" class="grow">Cancel</CustomButton>
         <CustomButton v-on:click="confirm()" class="grow">Confirm</CustomButton>
       </div>
