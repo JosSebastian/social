@@ -1,45 +1,55 @@
 <script setup>
 const supabase = useSupabaseClient();
 const user = useSupabaseUser();
+const file = ref(null);
 const credentials = ref({
   name: {
     first: "",
     last: "",
   },
   username: "",
+  description: "",
 });
+const upload = (input) => {
+  file.value = input.target.files[0];
+};
 const cancel = () => {
   navigateTo("/");
 };
 const confirm = async () => {
-  const email = async () => {
-    const response = await supabase
-      .from("users")
-      .select()
-      .eq("email", user.value?.email)
-      .single();
-    if (response.data) return false;
-    else return true;
-  };
-  const username = async () => {
-    const response = await supabase
-      .from("users")
-      .select()
-      .eq("username", credentials.value.username)
-      .single();
-    if (response.data) return false;
-    else return true;
-  };
-  const initialize = await (email() && username());
+  const email = await supabase
+    .from("users")
+    .select()
+    .eq("email", user.value?.email)
+    .single()
+    .then((response) => {
+      if (response.data) return false;
+      else return true;
+    });
+  const username = await supabase
+    .from("users")
+    .select()
+    .eq("username", credentials.value.username)
+    .single()
+    .then((response) => {
+      if (response.data) return false;
+      else return true;
+    });
+  const initialize = email && username && file.value;
   if (initialize) {
+    await supabase.storage
+      .from("profile")
+      .upload(`profile/${credentials.username}`, file.value);
     await supabase.from("users").insert([
       {
         email: user.value?.email,
         name: credentials.value.name,
         username: credentials.value.username,
+        description: credentials.value.description,
       },
     ]);
   }
+  navigateTo("/");
 };
 </script>
 
@@ -47,6 +57,8 @@ const confirm = async () => {
   <div class="background">
     <div class="foreground">
       <h3 class="text-2xl font-[450]">Initialize</h3>
+      <!-- Image -->
+      <input v-on:change="upload" type="file" accept=".jpeg,.png" />
       <!-- Name -->
       <div class="flex flex-row gap-3">
         <CustomInput
@@ -64,6 +76,12 @@ const confirm = async () => {
       <CustomInput
         v-model="credentials.username"
         label="UserName:"
+        type="text"
+      />
+      <!-- Description -->
+      <CustomInput
+        v-model="credentials.description"
+        label="Description:"
         type="text"
       />
       <!-- Action -->

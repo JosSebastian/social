@@ -23,14 +23,14 @@ const signOut = async () => {
   await supabase.auth.signOut();
 };
 const cancel = () => {
-  router.back();
+  navigateTo("/");
 };
 const confirm = () => {
   const query = router.currentRoute.value.query;
   if (query.sign === "on") signOn();
   else if (query.sign === "in") signIn();
   else if (query.sign === "out") signOut();
-  router.back();
+  navigateTo("/");
 };
 </script>
 
@@ -38,7 +38,10 @@ const confirm = () => {
   <div class="background">
     <div class="foreground">
       <h3 v-if="sign" class="text-2xl font-[450]">{{ sign }}</h3>
-      <div v-if="sign == 'Sign On' || sign == 'Sign In'" class="flex flex-col gap-3" >
+      <div
+        v-if="sign == 'Sign On' || sign == 'Sign In'"
+        class="flex flex-col gap-3"
+      >
         <!-- Email -->
         <CustomInput v-model="credentials.email" label="Email:" type="email" />
         <!-- Password -->
