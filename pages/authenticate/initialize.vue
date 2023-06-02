@@ -17,39 +17,39 @@ const cancel = () => {
   navigateTo("/");
 };
 const confirm = async () => {
-  const email = await supabase
+  const { error: em } = await supabase
     .from("users")
     .select()
     .eq("email", user.value?.email)
-    .single()
-    .then((response) => {
-      if (response.data) return false;
-      else return true;
-    });
-  const username = await supabase
+    .single();
+  const email = em ? true : false;
+  const { error: un } = await supabase
     .from("users")
     .select()
     .eq("username", credentials.value.username)
-    .single()
-    .then((response) => {
-      if (response.data) return false;
-      else return true;
-    });
+    .single();
+  const username = un ? true : false;
   const initialize = email && username && file.value;
   if (initialize) {
-    await supabase.storage
-      .from("profile")
-      .upload(`profile/${credentials.username}`, file.value);
-    await supabase.from("users").insert([
+    const { data: profile } = await supabase.storage
+      .from("profiles")
+      .upload(
+        `user/${credentials.value.username}.${file.value.name
+          .split(".")
+          .pop()}`,
+        file.value
+      );
+    const { data: users } = await supabase.from("users").insert([
       {
+        image: profile.path,
         email: user.value?.email,
         name: credentials.value.name,
         username: credentials.value.username,
         description: credentials.value.description,
       },
     ]);
+    if (profile && users) navigateTo("/");
   }
-  navigateTo("/");
 };
 </script>
 

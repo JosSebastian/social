@@ -1,6 +1,8 @@
 <script setup>
 const router = useRouter();
 const supabase = useSupabaseClient();
+const url =
+  "https://xqrobrhpuzeqalqtwkfk.supabase.co/storage/v1/object/public/";
 const profile = ref({
   image: "",
   name: "",
@@ -17,7 +19,9 @@ onMounted(async () => {
     .eq("username", router.currentRoute.value.params.user)
     .single()
     .then((response) => {
+      console.log(response.data.image);
       if (response.data) {
+        profile.value.image = `${url}profiles/${response.data.image}`;
         profile.value.name = `${response.data.name.first} ${response.data.name.last}`;
         profile.value.username = `@${response.data.username}`;
         profile.value.entries = response.data.entries;
