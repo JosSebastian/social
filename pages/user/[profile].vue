@@ -1,8 +1,8 @@
 <script setup>
 const router = useRouter();
 const supabase = useSupabaseClient();
-const url =
-  "https://xqrobrhpuzeqalqtwkfk.supabase.co/storage/v1/object/public/";
+const loading = ref(true);
+const url = "https://xqrobrhpuzeqalqtwkfk.supabase.co/storage/v1/object/public/";
 const profile = ref({
   image: "",
   name: "",
@@ -13,13 +13,14 @@ const profile = ref({
   description: "",
 });
 onMounted(async () => {
+  loading.value = true;
   await supabase
     .from("users")
     .select()
-    .eq("username", router.currentRoute.value.params.user)
+    .eq("username", router.currentRoute.value.params.profile)
     .single()
     .then((response) => {
-      console.log(response.data.image);
+      console.log(response.data)
       if (response.data) {
         profile.value.image = `${url}profiles/${response.data.image}`;
         profile.value.name = `${response.data.name.first} ${response.data.name.last}`;
@@ -30,11 +31,12 @@ onMounted(async () => {
         profile.value.description = response.data.description;
       }
     });
+  loading.value = false;
 });
 </script>
 
 <template>
-  <div>
+  <div v-if="!loading">
     <UserProfile v-bind:profile="profile" />
   </div>
 </template>

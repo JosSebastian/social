@@ -11,24 +11,24 @@ const { post, profile, name, identification, description } = toRefs(props);
 
 <template>
   <div class="w-96 rounded border-2 border-indigo-600">
-    <!-- Post -->
+    <!-- Entry -->
     <input v-bind:src="post" type="image" class="w-96 h-96 object-none" />
-    <!-- Post Information -->
+    <!-- Entry Information -->
     <div class="mx-3 mt-2 mb-3 flex flex-col justify-center">
       <div class="flex flex-row items-center">
-        <!-- Post Profile Picture -->
+        <!-- Profile Picture -->
         <input
           v-bind:src="profile"
           type="image"
           class="w-12 h-12 rounded-full object-none border border-indigo-600"
         />
-        <!-- Post Profile Information -->
+        <!-- Profile Information -->
         <div class="flex flex-col">
           <p class="ml-2">{{ name }}</p>
           <p class="ml-2 -translate-y-1 text-xs">@{{ identification }}</p>
         </div>
       </div>
-      <!-- Post Caption -->
+      <!-- Entry Caption -->
       <p class="mt-1 truncate">{{ description }}</p>
     </div>
   </div>

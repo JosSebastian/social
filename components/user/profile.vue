@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+const url =
+  "https://xqrobrhpuzeqalqtwkfk.supabase.co/storage/v1/object/public/";
 const { profile } = defineProps(["profile"]);
 </script>
 
